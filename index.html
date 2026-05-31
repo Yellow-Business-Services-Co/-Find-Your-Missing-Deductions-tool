@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find Your Missing Deductions – 2026 Tax Wizard | Yellow Business Services Co.</title>
+  <meta name="description" content="Discover 100+ uncommon tax deductions tailored to your profession. Brought to you by Yellow Business Services Co., an EA‑led firm with hardship pricing from $29.">
+  <meta name="robots" content="index,follow">
+  <style>
+    :root {
+      --pri: #1d4ed8; --pri-hi: #3b82f6; --accent: #FFD54F;
+      --bg: #f8fafc; --card: #ffffff; --text: #0f172a; --muted: #64748b;
+      --border: #e2e8f0; --success: #065f46; --success-bg: #ecfdf5;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #f0f4ff, #fff8e1);
+      color: var(--text); min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center;
+      padding: 2rem 1rem;
+    }
+    .container { max-width: 820px; width: 100%; }
+
+    /* Header */
+    .header { text-align: center; margin-bottom: 1.5rem; }
+    .header h1 {
+      font-size: clamp(2rem, 8vw, 2.8rem); font-weight: 900;
+      background: linear-gradient(135deg, var(--pri), #f59e0b);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 0.3rem;
+    }
+    .sub { color: var(--muted); font-size: 1rem; }
+
+    /* Card */
+    .card {
+      background: var(--card); border-radius: 20px;
+      padding: 2rem; box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+      animation: fadeSlide 0.6s ease; margin-bottom: 1.5rem;
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Select */
+    .select-group { margin-bottom: 1.5rem; }
+    .select-group label { font-weight: 700; display: block; margin-bottom: 0.3rem; color: var(--pri); }
+    select {
+      width: 100%; padding: 0.8rem 1rem; border: 2px solid var(--border);
+      border-radius: 10px; font-size: 1rem; background: #fff; color: var(--text);
+      font-family: inherit; font-weight: 500;
+    }
+    select:focus { border-color: var(--pri); outline: none; }
+
+    /* Deduction list */
+    .deduction-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 0.8rem; margin-bottom: 1.5rem;
+    }
+    .deduction-item {
+      background: #fff; border: 1px solid var(--border); border-radius: 14px;
+      padding: 1rem; cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: flex-start; gap: 0.7rem;
+    }
+    .deduction-item:hover { border-color: var(--pri); background: #f8faff; }
+    .deduction-item.checked {
+      border-color: var(--pri); background: #eff6ff; box-shadow: 0 0 0 2px rgba(29,78,216,0.15);
+    }
+    .deduction-item .emoji { font-size: 1.5rem; margin-top: 0.1rem; }
+    .deduction-item .desc { flex: 1; }
+    .deduction-item .desc .title { font-weight: 700; margin-bottom: 0.2rem; }
+    .deduction-item .desc .detail { font-size: 0.85rem; color: var(--muted); }
+    .deduction-item .amount { font-weight: 700; color: var(--pri); white-space: nowrap; margin-left: 0.5rem; }
+    input[type="checkbox"] { width: 1.3rem; height: 1.3rem; accent-color: var(--pri); margin-top: 0.2rem; }
+
+    /* Buttons */
+    .btn {
+      background: var(--pri); color: #fff; border: none;
+      padding: 1rem 1.5rem; border-radius: 14px; font-size: 1rem;
+      font-weight: 700; cursor: pointer; width: 100%; margin-top: 0.8rem;
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn:hover { background: var(--pri-hi); transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+
+    /* Result */
+    .result-card {
+      background: var(--success-bg); border: 2px solid #a7f3d0;
+      border-radius: 20px; padding: 1.5rem; text-align: center;
+      margin-top: 1.5rem; animation: pop 0.5s ease;
+    }
+    @keyframes pop {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .result-title { font-size: 1.8rem; font-weight: 800; margin: 0.5rem 0; }
+    .result-desc { color: var(--muted); margin-bottom: 1rem; }
+
+    /* CTA box – non‑removable */
+    .cta-box {
+      background: #fff; border-radius: 14px; padding: 1rem;
+      margin: 1rem 0; border: 2px dashed var(--pri);
+    }
+    .cta-box p { font-weight: 700; color: var(--pri); margin-bottom: 0.3rem; }
+    .cta-box a {
+      display: inline-block; background: var(--pri); color: #fff;
+      padding: 0.6rem 1.2rem; border-radius: 10px; text-decoration: none;
+      font-weight: 700; margin-top: 0.3rem;
+    }
+    .cta-box a:hover { background: var(--pri-hi); }
+
+    /* Footer */
+    .footer {
+      text-align: center; font-size: 0.85rem; color: var(--muted); margin-top: 1.5rem;
+    }
+    .footer a { color: var(--pri); text-decoration: none; font-weight: 600; }
+
+    /* Share */
+    .share {
+      display: flex; gap: 0.5rem; justify-content: center; margin-top: 0.8rem;
+    }
+    .share a {
+      background: #1d9bf0; color: #fff; padding: 0.4rem 0.8rem;
+      border-radius: 8px; text-decoration: none; font-size: 0.8rem; font-weight: 600;
+    }
+    .share a.whatsapp { background: #25d366; }
+    .share a.linkedin { background: #0a66c2; }
+
+    .missing-link {
+      margin-top: 1rem; text-align: center; font-size: 0.9rem;
+      color: var(--muted);
+    }
+    .missing-link a { color: var(--pri); font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- HEADER – BRANDED -->
+    <div class="header">
+      <h1>🕵️‍♂️ Find Your Missing Deductions</h1>
+      <p class="sub">
+        Select your profession to uncover 100+ uncommon tax deductions – brought to you by
+        <strong>Yellow Business Services Co.</strong>, EA‑led and CPA‑reviewed.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="select-group">
+        <label for="professionSelect">🎯 Choose Your Profession</label>
+        <select id="professionSelect" onchange="loadProfession()">
+          <option value="">-- Select --</option>
+          <option value="gig">Gig Worker / Freelancer</option>
+          <option value="rideshare">Rideshare Driver (Uber/Lyft)</option>
+          <option value="delivery">Delivery Driver (DoorDash, etc.)</option>
+          <option value="realestate">Real Estate Agent</option>
+          <option value="nurse">Nurse / Healthcare Worker</option>
+          <option value="teacher">Teacher / Educator</option>
+          <option value="trucker">Truck Driver</option>
+          <option value="military">Military Service Member</option>
+          <option value="developer">Software Developer / IT Professional</option>
+          <option value="designer">Graphic Designer / Creative Professional</option>
+          <option value="photographer">Photographer / Videographer</option>
+          <option value="consultant">Consultant / Coach</option>
+          <option value="construction">Construction Worker / Tradesperson</option>
+          <option value="hospitality">Restaurant / Hospitality Worker</option>
+          <option value="retail">Retail Worker</option>
+          <option value="student">Student</option>
+          <option value="retiree">Retiree</option>
+          <option value="smallbiz">Small Business Owner</option>
+          <option value="farmer">Farmer / Agricultural Worker</option>
+          <option value="artist">Artist / Musician</option>
+          <option value="pilot">Pilot / Flight Attendant</option>
+          <option value="sales">Salesperson</option>
+          <option value="remote">Remote Worker (general)</option>
+          <option value="influencer">Social Media Influencer / Content Creator</option>
+          <option value="homeowner">Homeowner (property deductions)</option>
+          <option value="other">Other / General Deductions</option>
+        </select>
+      </div>
+
+      <div id="deductionContainer" class="deduction-grid"></div>
+
+      <button class="btn" id="calculateBtn" style="display:none;" onclick="calculateSavings()">💰 Calculate My Potential Savings</button>
+
+      <div id="resultArea"></div>
+
+      <!-- GITHUB ISSUE LINK – BRANDED -->
+      <div class="missing-link">
+        <p>💡 Missing a deduction? <a href="https://github.com/YellowBusinessServicesCo/deduction-wizard/issues/new?title=Suggest%20a%20deduction" target="_blank" rel="noopener">Suggest it here</a> – we’ll add it!</p>
+      </div>
+    </div>
+
+    <!-- FOOTER – BRANDED -->
+    <div class="footer">
+      Built with ❤️ by <a href="https://yellowbusinessservices.com" target="_blank" rel="noopener">Yellow Business Services Co.</a><br>
+      EA‑led tax preparation • Hardship pricing from $29 • CPA‑reviewed returns
+    </div>
+  </div>
+
+  <script>
+    /*
+     * ============================================================
+     *  FIND YOUR MISSING DEDUCTIONS – WIZARD
+     *  Created by Yellow Business Services Co.
+     *  Website: https://yellowbusinessservices.com
+     *  This tool is open‑source and free to use.
+     *  Branding is intentionally embedded to support the creator.
+     * ============================================================
+     */
+
+    // -----------------------------------------------------------
+    // PROFESSION DEDUCTION DATA
+    // Each profession has a name and an array of deductions.
+    // Each deduction: emoji, title, detail description, approx. value
+    // -----------------------------------------------------------
+    const professions = {
+      // 1. GIG WORKER / FREELANCER
+      gig: {
+        name: 'Gig Worker / Freelancer',
+        deductions: [
+          { emoji:'🏠', title:'Home Office Deduction', detail:'Dedicated workspace deduction: $5/sq ft up to 300 sq ft.', value:1500 },
+          { emoji:'📱', title:'Cell Phone & Internet', detail:'Percentage of business use for phone and internet bills.', value:800 },
+          { emoji:'🚗', title:'Mileage / Vehicle Expenses', detail:'Standard mileage rate (67¢ per mile) or actual expenses.', value:2500 },
+          { emoji:'💻', title:'Computer & Software', detail:'Laptops, monitors, software subscriptions used for work.', value:1200 },
+          { emoji:'📚', title:'Continuing Education', detail:'Online courses, webinars, books to improve skills.', value:600 },
+          { emoji:'📣', title:'Marketing & Advertising', detail:'Social media ads, business cards, website hosting.', value:700 },
+          { emoji:'🩺', title:'Health Insurance Premiums', detail:'Self-employed health insurance deduction.', value:3500 },
+          { emoji:'🏦', title:'Business Bank Fees', detail:'Monthly service charges, transaction fees.', value:300 },
+          { emoji:'☕', title:'Coworking Space', detail:'Rent for coworking memberships or meeting rooms.', value:1200 },
+          { emoji:'📋', title:'Professional Services', detail:'Legal, accounting, and tax preparation fees.', value:1000 }
+        ]
+      },
+      // 2. RIDESHARE DRIVER (UBER/LYFT)
+      rideshare: {
+        name: 'Rideshare Driver (Uber/Lyft)',
+        deductions: [
+          { emoji:'🚗', title:'Mileage', detail:'All miles driven while online (including pickups).', value:4500 },
+          { emoji:'📱', title:'Phone Mount & Charger', detail:'Accessories used exclusively for driving.', value:50 },
+          { emoji:'💡', title:'Interior Lights & Signs', detail:'LED signs, water bottles for passengers.', value:80 },
+          { emoji:'🧼', title:'Car Wash & Detailing', detail:'Monthly cleaning expenses.', value:300 },
+          { emoji:'🛞', title:'Tires & Maintenance', detail:'Oil changes, tires, brakes attributable to business use.', value:1100 },
+          { emoji:'🎶', title:'Satellite Radio / Streaming', detail:'Music service for passengers.', value:180 },
+          { emoji:'📸', title:'Dashcam', detail:'Dashcam purchase for safety/insurance.', value:120 },
+          { emoji:'🅿️', title:'Parking & Tolls', detail:'Tolls and parking while working.', value:400 }
+        ]
+      },
+      // 3. DELIVERY DRIVER (DOORDASH, ETC.)
+      delivery: {
+        name: 'Delivery Driver (DoorDash, etc.)',
+        deductions: [
+          { emoji:'🛵', title:'Vehicle Expenses', detail:'Mileage or actual expenses for bike/car/scooter.', value:3200 },
+          { emoji:'📱', title:'Phone & Data Plan', detail:'App usage requires reliable data.', value:600 },
+          { emoji:'🧊', title:'Insulated Bags', detail:'Hot/cold bags for food transport.', value:70 },
+          { emoji:'🧥', title:'Weather Gear', detail:'Rain jacket, gloves, sun protection.', value:110 },
+          { emoji:'🔋', title:'Power Bank', detail:'Portable charger for phone.', value:40 },
+          { emoji:'📦', title:'Equipment', detail:'Bike maintenance, helmets, locks.', value:200 },
+          { emoji:'🚗', title:'Parking & Tolls', detail:'While making deliveries.', value:250 }
+        ]
+      },
+      // 4. REAL ESTATE AGENT
+      realestate: {
+        name: 'Real Estate Agent',
+        deductions: [
+          { emoji:'🏠', title:'Home Office', detail:'Exclusive workspace for administrative tasks.', value:1500 },
+          { emoji:'📸', title:'Photography & Staging', detail:'Professional photos, virtual tours, staging.', value:2000 },
+          { emoji:'📣', title:'Marketing & Advertising', detail:'Flyers, online listings, social media ads.', value:1800 },
+          { emoji:'🚗', title:'Mileage', detail:'Driving to showings, open houses, client meetings.', value:4000 },
+          { emoji:'📚', title:'Continuing Education', detail:'License renewal courses, designations.', value:500 },
+          { emoji:'💼', title:'MLS & Board Fees', detail:'Realtor association dues.', value:900 },
+          { emoji:'🍽️', title:'Client Meals & Entertainment', detail:'50% deductible business meals.', value:600 },
+          { emoji:'📱', title:'Phone & Tablet', detail:'Business‑only lines.', value:700 },
+          { emoji:'🖨️', title:'Office Supplies & Printing', detail:'Signage, brochures, business cards.', value:400 }
+        ]
+      },
+      // 5. NURSE / HEALTHCARE WORKER
+      nurse: {
+        name: 'Nurse / Healthcare Worker',
+        deductions: [
+          { emoji:'👟', title:'Uniforms & Scrubs', detail:'Cost of uniforms not reimbursed by employer.', value:300 },
+          { emoji:'🩺', title:'Stethoscope & Equipment', detail:'Personal medical tools.', value:200 },
+          { emoji:'📚', title:'Continuing Education', detail:'CEU courses, certifications.', value:550 },
+          { emoji:'🚗', title:'Travel Between Facilities', detail:'Mileage for home health or multiple locations.', value:800 },
+          { emoji:'💉', title:'Immunizations & TB Tests', detail:'Required by employer.', value:120 },
+          { emoji:'📱', title:'Cell Phone', detail:'Work‑related communication.', value:300 },
+          { emoji:'🧼', title:'Hand Sanitizer & PPE', detail:'Personal protective equipment.', value:150 },
+          { emoji:'👓', title:'Prescription Safety Glasses', detail:'If required for work.', value:180 }
+        ]
+      },
+      // 6. TEACHER / EDUCATOR
+      teacher: {
+        name: 'Teacher / Educator',
+        deductions: [
+          { emoji:'📚', title:'Classroom Supplies', detail:'Books, pencils, art supplies (up to $300 educator expense).', value:300 },
+          { emoji:'💻', title:'Computer & Software', detail:'Laptop, educational apps.', value:700 },
+          { emoji:'📖', title:'Professional Development', detail:'Workshops, conferences, subscriptions.', value:400 },
+          { emoji:'🚗', title:'Mileage for Field Trips', detail:'If not reimbursed.', value:150 },
+          { emoji:'🎨', title:'Decor & Bulletin Boards', detail:'Classroom decorations.', value:120 },
+          { emoji:'📱', title:'Cell Phone', detail:'Parent communication.', value:200 },
+          { emoji:'📋', title:'Union Dues', detail:'Teacher union membership.', value:500 },
+          { emoji:'🎓', title:'Student Loan Interest', detail:'Up to $2,500 deduction if eligible.', value:2500 }
+        ]
+      },
+      // 7. TRUCK DRIVER
+      trucker: {
+        name: 'Truck Driver',
+        deductions: [
+          { emoji:'🚛', title:'Per Diem Expenses', detail:'Meals on the road (80% deductible).', value:5200 },
+          { emoji:'📱', title:'Cell Phone & GPS', detail:'Navigation and communication.', value:600 },
+          { emoji:'🛞', title:'Truck Maintenance', detail:'Oil changes, tires, repairs.', value:2200 },
+          { emoji:'🧳', title:'Luggage & Storage', detail:'Bags and storage bins.', value:150 },
+          { emoji:'📋', title:'Logbook & Compliance', detail:'Electronic logging devices.', value:200 },
+          { emoji:'🛏️', title:'Sleeper Berth Supplies', detail:'Bedding, curtains, fan.', value:300 },
+          { emoji:'🍽️', title:'Food & Drink', detail:'80% of meals while on duty.', value:3000 },
+          { emoji:'🚿', title:'Showers & Hygiene', detail:'Truck stop fees.', value:250 }
+        ]
+      },
+      // 8. MILITARY SERVICE MEMBER
+      military: {
+        name: 'Military Service Member',
+        deductions: [
+          { emoji:'👔', title:'Uniforms', detail:'Cost of uniforms not reimbursed.', value:400 },
+          { emoji:'✈️', title:'Travel for Drill', detail:'Reservist travel expenses.', value:800 },
+          { emoji:'📚', title:'Professional Development', detail:'Courses, certifications.', value:300 },
+          { emoji:'🏠', title:'Moving Expenses', detail:'If PCS (permanent change of station).', value:2500 },
+          { emoji:'🩺', title:'Medical & Dental', detail:'Out‑of‑pocket costs.', value:600 },
+          { emoji:'💼', title:'Job Search Expenses', detail:'For transitioning out.', value:350 },
+          { emoji:'📱', title:'Phone', detail:'Deployed communication.', value:200 }
+        ]
+      },
+      // 9. SOFTWARE DEVELOPER / IT PROFESSIONAL
+      developer: {
+        name: 'Software Developer / IT Professional',
+        deductions: [
+          { emoji:'💻', title:'Computer & Monitors', detail:'Personal equipment used for work.', value:2000 },
+          { emoji:'📚', title:'Books & Courses', detail:'Online learning platforms, certifications.', value:700 },
+          { emoji:'🏠', title:'Home Office', detail:'Dedicated workspace.', value:1500 },
+          { emoji:'📱', title:'Internet & Phone', detail:'Percentage business use.', value:600 },
+          { emoji:'⌨️', title:'Peripherals & Gadgets', detail:'Keyboard, mouse, external drives.', value:300 },
+          { emoji:'🖥️', title:'Software Licenses', detail:'IDE, design tools, cloud services.', value:500 },
+          { emoji:'🛠️', title:'Server / Hosting', detail:'Personal projects or freelance hosting.', value:250 },
+          { emoji:'🎮', title:'Ergonomic Equipment', detail:'Standing desk, chair.', value:800 }
+        ]
+      },
+      // 10. GRAPHIC DESIGNER / CREATIVE PROFESSIONAL
+      designer: {
+        name: 'Graphic Designer / Creative Professional',
+        deductions: [
+          { emoji:'🖥️', title:'Computer & Tablet', detail:'Mac/PC, drawing tablet.', value:2000 },
+          { emoji:'📸', title:'Camera & Lighting', detail:'Product photography, lighting kit.', value:1200 },
+          { emoji:'🎨', title:'Software Subscriptions', detail:'Adobe Creative Cloud, Sketch, etc.', value:600 },
+          { emoji:'📚', title:'Tutorials & Assets', detail:'Stock photos, fonts, templates.', value:350 },
+          { emoji:'🏠', title:'Home Studio', detail:'Rent/space dedicated to creative work.', value:1500 },
+          { emoji:'📣', title:'Portfolio Hosting', detail:'Website domain, hosting.', value:200 },
+          { emoji:'📱', title:'Phone & Internet', detail:'Business percentage.', value:500 }
+        ]
+      },
+      // 11. PHOTOGRAPHER / VIDEOGRAPHER
+      photographer: {
+        name: 'Photographer / Videographer',
+        deductions: [
+          { emoji:'📷', title:'Camera Bodies & Lenses', detail:'Equipment depreciation or expense.', value:3000 },
+          { emoji:'💡', title:'Lighting Equipment', detail:'Softboxes, strobes, reflectors.', value:800 },
+          { emoji:'🖥️', title:'Editing Computer', detail:'High‑spec PC/Mac for editing.', value:1800 },
+          { emoji:'📹', title:'Video Gear', detail:'Tripods, gimbals, microphones.', value:700 },
+          { emoji:'📚', title:'Education', detail:'Workshops, online courses.', value:400 },
+          { emoji:'🚗', title:'Travel to Shoots', detail:'Mileage or transportation.', value:900 },
+          { emoji:'💾', title:'Storage & Backup', detail:'External drives, cloud storage.', value:300 }
+        ]
+      },
+      // 12. CONSULTANT / COACH
+      consultant: {
+        name: 'Consultant / Coach',
+        deductions: [
+          { emoji:'🏠', title:'Home Office', detail:'Exclusive workspace.', value:1500 },
+          { emoji:'📚', title:'Certifications', detail:'Coaching certifications, assessments.', value:1200 },
+          { emoji:'📣', title:'Website & Branding', detail:'Domain, hosting, design.', value:600 },
+          { emoji:'📱', title:'Phone & Internet', detail:'Business percentage.', value:500 },
+          { emoji:'✈️', title:'Travel', detail:'Client visits, conferences.', value:2000 },
+          { emoji:'📋', title:'Software', detail:'CRM, scheduling tools.', value:350 },
+          { emoji:'🍽️', title:'Client Meals', detail:'50% deductible.', value:400 },
+          { emoji:'📖', title:'Books & Resources', detail:'Professional development.', value:250 }
+        ]
+      },
+      // 13. CONSTRUCTION WORKER / TRADESPERSON
+      construction: {
+        name: 'Construction Worker / Tradesperson',
+        deductions: [
+          { emoji:'🔧', title:'Tools & Equipment', detail:'Power tools, hand tools.', value:1200 },
+          { emoji:'👢', title:'Safety Gear', detail:'Boots, helmets, gloves.', value:300 },
+          { emoji:'🚗', title:'Vehicle Expenses', detail:'Truck mileage to job sites.', value:3000 },
+          { emoji:'📱', title:'Phone', detail:'Coordination with clients/contractors.', value:300 },
+          { emoji:'🏋️', title:'Tool Storage', detail:'Toolbox, trailer rental.', value:400 },
+          { emoji:'🧥', title:'Work Clothing', detail:'Uniforms, protective wear.', value:250 },
+          { emoji:'📚', title:'Certifications', detail:'OSHA training, license renewal.', value:350 }
+        ]
+      },
+      // 14. RESTAURANT / HOSPITALITY WORKER
+      hospitality: {
+        name: 'Restaurant / Hospitality Worker',
+        deductions: [
+          { emoji:'👔', title:'Uniforms', detail:'Aprons, non‑slip shoes.', value:150 },
+          { emoji:'🔪', title:'Knives & Tools', detail:'Chef knives, serving tools.', value:200 },
+          { emoji:'🚗', title:'Travel to Work', detail:'If multiple locations.', value:500 },
+          { emoji:'📚', title:'Certifications', detail:'Food handler, alcohol service.', value:100 },
+          { emoji:'📱', title:'Phone', detail:'Scheduling, communication.', value:150 },
+          { emoji:'🧼', title:'Cleaning Supplies', detail:'Personal PPE, sanitizers.', value:80 }
+        ]
+      },
+      // 15. RETAIL WORKER
+      retail: {
+        name: 'Retail Worker',
+        deductions: [
+          { emoji:'👔', title:'Uniforms', detail:'Store‑specific attire.', value:120 },
+          { emoji:'👟', title:'Shoes', detail:'Comfortable work shoes.', value:100 },
+          { emoji:'📚', title:'Training', detail:'Sales training, product knowledge.', value:80 },
+          { emoji:'🚗', title:'Travel', detail:'Between stores or to inventory.', value:300 }
+        ]
+      },
+      // 16. STUDENT
+      student: {
+        name: 'Student',
+        deductions: [
+          { emoji:'📚', title:'Tuition & Fees', detail:'American Opportunity or Lifetime Learning credits.', value:2500 },
+          { emoji:'💻', title:'Computer', detail:'Required for coursework.', value:800 },
+          { emoji:'📖', title:'Books & Supplies', detail:'Textbooks, lab materials.', value:500 },
+          { emoji:'🏠', title:'Rent', detail:'If studying away from home.', value:2000 },
+          { emoji:'🚗', title:'Travel', detail:'Commuting to campus or internship.', value:400 },
+          { emoji:'📱', title:'Phone & Internet', detail:'For online classes.', value:300 }
+        ]
+      },
+      // 17. RETIREE
+      retiree: {
+        name: 'Retiree',
+        deductions: [
+          { emoji:'🩺', title:'Medical Expenses', detail:'Exceeding 7.5% AGI.', value:3500 },
+          { emoji:'💰', title:'IRA Contributions', detail:'Deductible IRA contributions.', value:7000 },
+          { emoji:'🏠', title:'Property Tax', detail:'SALT deduction up to $10k.', value:4000 },
+          { emoji:'📈', title:'Investment Fees', detail:'Advisory fees (if applicable).', value:500 },
+          { emoji:'💊', title:'Prescription Drugs', detail:'Out‑of‑pocket costs.', value:800 }
+        ]
+      },
+      // 18. SMALL BUSINESS OWNER
+      smallbiz: {
+        name: 'Small Business Owner',
+        deductions: [
+          { emoji:'🏠', title:'Home Office', detail:'Regular and exclusive use.', value:1500 },
+          { emoji:'📣', title:'Advertising', detail:'Online ads, print, sponsorships.', value:2000 },
+          { emoji:'📋', title:'Legal & Professional Fees', detail:'Attorney, accountant.', value:1500 },
+          { emoji:'🧑‍💼', title:'Employee Wages', detail:'Salaries, benefits for employees.', value:50000 },
+          { emoji:'🖥️', title:'Equipment', detail:'Computers, machinery.', value:3000 },
+          { emoji:'🚗', title:'Vehicle', detail:'Business use of car.', value:2500 },
+          { emoji:'📱', title:'Phone & Utilities', detail:'Business portion.', value:800 }
+        ]
+      },
+      // 19. FARMER / AGRICULTURAL WORKER
+      farmer: {
+        name: 'Farmer / Agricultural Worker',
+        deductions: [
+          { emoji:'🚜', title:'Equipment', detail:'Tractors, harvesters.', value:8000 },
+          { emoji:'🌾', title:'Seeds & Fertilizer', detail:'Crop inputs.', value:3000 },
+          { emoji:'💧', title:'Irrigation', detail:'Water, equipment.', value:1500 },
+          { emoji:'📦', title:'Storage & Shipping', detail:'Silos, containers, transport.', value:2000 },
+          { emoji:'🧑‍🌾', title:'Labor', detail:'Farmhand wages.', value:6000 },
+          { emoji:'📋', title:'Insurance', detail:'Crop insurance.', value:1200 }
+        ]
+      },
+      // 20. ARTIST / MUSICIAN
+      artist: {
+        name: 'Artist / Musician',
+        deductions: [
+          { emoji:'🎸', title:'Instruments', detail:'Guitars, keyboards, strings.', value:1200 },
+          { emoji:'🎧', title:'Recording Equipment', detail:'Microphones, audio interface.', value:800 },
+          { emoji:'🖼️', title:'Art Supplies', detail:'Canvas, paint, brushes.', value:500 },
+          { emoji:'🏠', title:'Studio Space', detail:'Rent or home studio deduction.', value:1500 },
+          { emoji:'📣', title:'Promotion', detail:'Social media ads, flyers.', value:300 },
+          { emoji:'🚗', title:'Travel to Gigs', detail:'Mileage, parking.', value:600 }
+        ]
+      },
+      // 21. PILOT / FLIGHT ATTENDANT
+      pilot: {
+        name: 'Pilot / Flight Attendant',
+        deductions: [
+          { emoji:'✈️', title:'Uniforms', detail:'Pilot uniform, wings.', value:500 },
+          { emoji:'📋', title:'Medical Certificate', detail:'FAA medical exam.', value:150 },
+          { emoji:'📚', title:'Recurrent Training', detail:'Simulator sessions, manuals.', value:800 },
+          { emoji:'🧳', title:'Luggage', detail:'Crew luggage, bags.', value:200 },
+          { emoji:'🏨', title:'Per Diem', detail:'Meals during layovers.', value:2500 },
+          { emoji:'📱', title:'Phone', detail:'International roaming.', value:300 }
+        ]
+      },
+      // 22. SALESPERSON
+      sales: {
+        name: 'Salesperson',
+        deductions: [
+          { emoji:'🚗', title:'Mileage', detail:'Client visits.', value:3000 },
+          { emoji:'📱', title:'Phone', detail:'Business calls.', value:500 },
+          { emoji:'🍽️', title:'Client Meals', detail:'50% deductible.', value:700 },
+          { emoji:'👔', title:'Clothing', detail:'Business attire (not typically deductible unless required uniform).', value:0 },
+          { emoji:'📋', title:'Sales Materials', detail:'Brochures, samples.', value:200 },
+          { emoji:'💻', title:'Laptop', detail:'Presentation device.', value:800 }
+        ]
+      },
+      // 23. REMOTE WORKER (GENERAL)
+      remote: {
+        name: 'Remote Worker (general)',
+        deductions: [
+          { emoji:'🏠', title:'Home Office', detail:'Regular and exclusive use.', value:1500 },
+          { emoji:'📱', title:'Internet & Phone', detail:'Business percentage.', value:600 },
+          { emoji:'🪑', title:'Ergonomic Furniture', detail:'Chair, desk.', value:700 },
+          { emoji:'💻', title:'Computer', detail:'Work laptop/PC.', value:1000 },
+          { emoji:'🔌', title:'Electricity', detail:'Portion attributable to home office.', value:200 },
+          { emoji:'📚', title:'Online Courses', detail:'Skill improvement.', value:300 }
+        ]
+      },
+      // 24. SOCIAL MEDIA INFLUENCER / CONTENT CREATOR
+      influencer: {
+        name: 'Social Media Influencer / Content Creator',
+        deductions: [
+          { emoji:'📸', title:'Camera & Lighting', detail:'Content creation gear.', value:2000 },
+          { emoji:'💻', title:'Editing Software', detail:'Premiere, Final Cut.', value:300 },
+          { emoji:'👗', title:'Wardrobe', detail:'Outfits for videos (if exclusively for content).', value:800 },
+          { emoji:'🎙️', title:'Microphone', detail:'Podcast/streaming mic.', value:250 },
+          { emoji:'📣', title:'Ads & Promotion', detail:'Boosting posts.', value:600 },
+          { emoji:'🏠', title:'Home Studio', detail:'Space used solely for content.', value:1500 },
+          { emoji:'🚗', title:'Travel', detail:'To locations, events.', value:700 }
+        ]
+      },
+      // 25. HOMEOWNER (PROPERTY DEDUCTIONS)
+      homeowner: {
+        name: 'Homeowner (property deductions)',
+        deductions: [
+          { emoji:'🏠', title:'Mortgage Interest', detail:'Up to $750k mortgage.', value:12000 },
+          { emoji:'💰', title:'Property Tax', detail:'SALT deduction up to $10k.', value:5000 },
+          { emoji:'🔧', title:'Home Improvements', detail:'Capital improvements that increase basis.', value:0 },
+          { emoji:'🌞', title:'Solar Panels', detail:'Residential clean energy credit.', value:5000 },
+          { emoji:'💡', title:'Energy Efficiency', detail:'Insulation, windows, doors.', value:1200 }
+        ]
+      },
+      // 26. OTHER / GENERAL
+      other: {
+        name: 'Other / General Deductions',
+        deductions: [
+          { emoji:'🏠', title:'Standard Deduction', detail:'For reference: Single $14,600, Married $29,200 (2026).', value:0 },
+          { emoji:'🩺', title:'Medical Expenses', detail:'Over 7.5% AGI.', value:2000 },
+          { emoji:'🎓', title:'Student Loan Interest', detail:'Up to $2,500.', value:2500 },
+          { emoji:'💰', title:'IRA Contributions', detail:'Traditional IRA.', value:7000 },
+          { emoji:'📊', title:'Investment Fees', detail:'Margin interest, advisory fees.', value:300 },
+          { emoji:'🏦', title:'Mortgage Points', detail:'Points paid on home purchase.', value:800 }
+        ]
+      }
+    };
+
+    // -----------------------------------------------------------
+    // LOGIC
+    // -----------------------------------------------------------
+    function loadProfession() {
+      const select = document.getElementById('professionSelect');
+      const professionKey = select.value;
+      const container = document.getElementById('deductionContainer');
+      const calcBtn = document.getElementById('calculateBtn');
+      const resultArea = document.getElementById('resultArea');
+      resultArea.innerHTML = '';
+      container.innerHTML = '';
+
+      if (!professionKey) {
+        calcBtn.style.display = 'none';
+        return;
+      }
+
+      const profession = professions[professionKey];
+      if (!profession) return;
+
+      profession.deductions.forEach((ded, index) => {
+        const div = document.createElement('div');
+        div.className = 'deduction-item';
+        div.innerHTML = `
+          <input type="checkbox" id="ded-${index}" value="${ded.value}" data-label="${ded.title}">
+          <span class="emoji">${ded.emoji}</span>
+          <div class="desc">
+            <div class="title">${ded.title}</div>
+            <div class="detail">${ded.detail}</div>
+          </div>
+          <div class="amount">~$${ded.value.toLocaleString()}</div>
+        `;
+        div.addEventListener('click', function(e) {
+          if (e.target.tagName !== 'INPUT') {
+            const cb = this.querySelector('input[type="checkbox"]');
+            cb.checked = !cb.checked;
+          }
+          this.classList.toggle('checked', this.querySelector('input').checked);
+        });
+        container.appendChild(div);
+      });
+
+      calcBtn.style.display = 'block';
+    }
+
+    function calculateSavings() {
+      const checkboxes = document.querySelectorAll('#deductionContainer input[type="checkbox"]:checked');
+      if (checkboxes.length === 0) {
+        document.getElementById('resultArea').innerHTML = '<p style="color:var(--muted); margin-top:1rem;">Please select at least one deduction.</p>';
+        return;
+      }
+
+      let totalDeductions = 0;
+      const selectedLabels = [];
+      checkboxes.forEach(cb => {
+        totalDeductions += parseFloat(cb.value);
+        selectedLabels.push(cb.dataset.label);
+      });
+
+      const estimatedSavings = Math.round(totalDeductions * 0.22);
+      const site = 'https://yellowbusinessservices.com';
+      const name = 'Yellow Business Services Co.';
+
+      const html = `
+        <div class="result-card">
+          <div class="result-title">💰 $${totalDeductions.toLocaleString()} in potential deductions found!</div>
+          <div class="result-desc">
+            At a 22% tax rate, that’s about <strong>$${estimatedSavings.toLocaleString()}</strong> back in your pocket.<br>
+            <small>Selected: ${selectedLabels.join(', ')}</small>
+          </div>
+          <div class="cta-box">
+            <p>Let our EA‑led team make sure you claim every dollar – starting at <strong>$49</strong>.</p>
+            <a href="${site}" target="_blank" rel="noopener">📁 File with ${name}</a>
+          </div>
+          <div class="share">
+            <a href="https://twitter.com/intent/tweet?text=I%20found%20%24${totalDeductions}%20in%20missing%20deductions%20with%20this%20free%20tool!&url=${encodeURIComponent(window.location.href)}" target="_blank" rel="noopener">🐦 Tweet</a>
+            <a href="https://wa.me/?text=I%20found%20%24${totalDeductions}%20in%20missing%20deductions%20-%20check%20it%20out:%20${encodeURIComponent(window.location.href)}" target="_blank" rel="noopener" class="whatsapp">📲 WhatsApp</a>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(window.location.href)}" target="_blank" rel="noopener" class="linkedin">💼 LinkedIn</a>
+          </div>
+        </div>`;
+      document.getElementById('resultArea').innerHTML = html;
+    }
+  </script>
+</body>
+</html>
